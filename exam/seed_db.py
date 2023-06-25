@@ -94,6 +94,12 @@ def seed_covers():
             mime_type=".png",
             md5_hash="sandjsandjasn",
         ),
+         models.Cover(
+            file="asd.png",
+            mime_type=".png",
+            md5_hash="sandjsandjasb",
+        ),
+        
     ]
 
     return covers

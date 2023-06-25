@@ -7,6 +7,8 @@ from sqlalchemy.orm import backref
 db = SQLAlchemy()
 
 class Role(db.Model):
+    __tablename__ = 'roles'
+
     id = db.Column(db.Integer, primary_key=True)
 
     name = db.Column(db.String(50), unique=True, nullable=False)
@@ -18,6 +20,8 @@ class Role(db.Model):
 
 
 class User(db.Model, UserMixin):
+    __tablename__ = 'users'
+
     id = db.Column(db.Integer, primary_key=True)
 
     login = db.Column(db.String(50), unique=True, nullable=False)
@@ -28,19 +32,21 @@ class User(db.Model, UserMixin):
 
     patronymic = db.Column(db.String(50), nullable=True)
 
-    role_id = db.Column(db.String(50), db.ForeignKey('role.id'), nullable=False)
+    role_id = db.Column(db.Integer, db.ForeignKey('roles.id'), nullable=False)
 
     email = db.Column(db.String(50), unique=True, nullable=False)
 
-    password = db.Column(db.String(50), nullable=False)
+    password = db.Column(db.String(255), nullable=False)
 
-    role = db.relationship("Role", backref=backref("role.id", cascade="all, delete"))
+    role = db.relationship("Role", backref=backref("roles.id", cascade="all, delete"))
 
     def __repr__(self):
         return self.login
 
 
 class Cover(db.Model):
+    __tablename__ = 'covers'
+
     id = db.Column(db.Integer, primary_key=True)
 
     file = db.Column(db.String(255), nullable=False)
@@ -54,6 +60,8 @@ class Cover(db.Model):
 
 
 class Book(db.Model):
+    __tablename__ = 'books'
+
     id = db.Column(db.Integer, primary_key=True)
 
     name = db.Column(db.String(50), unique=True, nullable=False)
@@ -68,17 +76,19 @@ class Book(db.Model):
 
     pages = db.Column(db.String(50), nullable=False)
 
-    cover_id = db.Column(db.Integer, db.ForeignKey('cover.id'))
+    cover_id = db.Column(db.Integer, db.ForeignKey('covers.id'))
 
-    cover = db.relationship("Cover", backref="cover")
+    cover = db.relationship("Cover", backref="covers")
 
-    reviews = db.relationship("Review", backref="review")
+    reviews = db.relationship("Review", backref="reviews")
 
     def __repr__(self):
         return self.name
 
 
 class Genre(db.Model):
+    __tablename__ = 'genres'
+
     id = db.Column(db.Integer, primary_key=True)
 
     name = db.Column(db.String(50), unique=True, nullable=False)
@@ -88,18 +98,22 @@ class Genre(db.Model):
 
 
 class BookGenre(db.Model):
+    __tablename__ = 'bookgenres'
+
     id = db.Column(db.Integer, primary_key=True)
 
-    book_id = db.Column(db.Integer, db.ForeignKey('book.id'))
+    book_id = db.Column(db.Integer, db.ForeignKey('books.id'))
 
-    genre_id = db.Column(db.Integer, db.ForeignKey('genre.id'))
+    genre_id = db.Column(db.Integer, db.ForeignKey('genres.id'))
 
-    genre = db.relationship("Genre", backref="genre.id")
+    genre = db.relationship("Genre", backref="genres.id")
 
-    book = db.relationship("Book", backref=backref("book.id", cascade="all,delete"))
+    book = db.relationship("Book", backref=backref("books.id", cascade="all,delete"))
 
 
 class ReviewStatus(db.Model):
+    __tablename__ = 'review_statuses'
+
     id = db.Column(db.Integer, primary_key=True)
 
     name = db.Column(db.String(50), unique=True, nullable=False)
@@ -109,11 +123,13 @@ class ReviewStatus(db.Model):
 
 
 class Review(db.Model):
+    __tablename__ = 'reviews'
+
     id = db.Column(db.Integer, primary_key=True)
 
-    book_id = db.Column(db.Integer, db.ForeignKey('book.id'), nullable=False)
+    book_id = db.Column(db.Integer, db.ForeignKey('books.id'), nullable=False)
 
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
     rating = db.Column(db.Integer)
 
@@ -121,11 +137,11 @@ class Review(db.Model):
 
     created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
 
-    user = db.relationship("User", backref=backref("user.id", cascade="all, delete"))
+    user = db.relationship("User", backref=backref("users.id", cascade="all, delete"))
 
-    status_id = db.Column(db.Integer, db.ForeignKey('review_status.id'), nullable=False)
+    status_id = db.Column(db.Integer, db.ForeignKey('review_statuses.id'), nullable=False)
 
-    status = db.relationship("ReviewStatus", backref=backref("review_status.id", cascade="all,delete"))
+    status = db.relationship("ReviewStatus", backref=backref("review_statuses.id", cascade="all,delete"))
 
     book = db.relationship("Book")
 
