@@ -1,0 +1,48 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 my-4 text-center">
+                <h3>Новая книга</h3>
+            </div>
+            <div class="col-12 col-lg-4">
+                {% for field, errors in form.errors.items() %}
+                    <div class="alert alert-error">
+                        {{ form[field].label }}: {{ ', '.join(errors) }}
+                    </div>
+                {% endfor %}
+                <form enctype="multipart/form-data" method="POST">
+                    {{ form.hidden_tag() }}
+                    <div class="form-group">
+                        {{form.name(class_="form-control", placeholder_="Название")}}
+                    </div>
+                    <div class="form-group">
+                        {{form.short_description(class_="form-control", placeholder_="Краткое описание", rows="5")}}
+                    </div>
+                    <div class="form-group">
+                        {{form.genre(class_="form-control")}}
+                    </div>
+                    <div class="form-group">
+                        {{form.year(class_="form-control", placeholder_="Год", size=4)}}
+                    </div>
+                    <div class="form-group">
+                        {{form.publisher(class_="form-control", placeholder_="Издательство")}}
+                    </div>
+                    <div class="form-group">
+                        {{form.author(class_="form-control", placeholder_="Автор")}}
+                    </div>
+                    <div class="form-group">
+                        {{form.pages(class_="form-control", placeholder_="Объем (страниц)")}}
+                    </div>
+                    <div class="form-group">
+                        {{form.cover_id(class_="form-control", placeholder_="Обложка")}}
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-success" value="Сохранить">
+                        <a href="/" class="btn btn-primary">Назад</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

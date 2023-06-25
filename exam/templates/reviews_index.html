@@ -1,0 +1,19 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 my-4 text-center">
+                <h3>Рецензия</h3>
+            </div>
+            <div class="col-12 my-4">
+                <p><b>Книга:</b> {{ review.book.name }}</p>
+                <p><b>Текст рецензии:</b> {{ review.text }}</p>
+                <p><b>Автор:</b> {{ review.user.first_name }} {{ review.user.last_name }}</p>
+                <p><b>Дата:</b> {{ review.created_at.strftime('%d.%m.%Y %H:%m') }}</p>
+                <p><b>Статус:</b> {{ review.status.name }}</p>
+                <a class="btn btn-success" href="/review/make_decision/accept/{{ review.id }}">Одобрить</a>
+                <a class="btn btn-danger" href="/review/make_decision/deny/{{ review.id }}">Отклонить</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

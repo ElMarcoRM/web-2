@@ -1,9 +1,39 @@
 {% extends 'layout.html' %}
 {% block content %}
     <div class="container">
-        <div class="row">
-            <div class="col-12">
-                
+        <div class="row my-4">
+            {% for book, book_review, book_review_count in books %}    
+                <div class="col-12 col-md-4 my-2">
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="{{ url_for('media', filename="covers/" + book.cover.file) }}" alt="Card image cap">
+                        <div class="card-body">
+                        <h5 class="card-title">{{ book.name }}</h5>
+                        <p class="card-text">{{ book.short_description| truncate(70) }}</p>
+                        <p class="card-text"> Рецензий: 
+                            {% if book_review_count %}
+                                {% if book_review_count[0] %}
+                                    {{ book_review_count[0] }}
+                                {% else %}
+                                    0
+                                {% endif %}
+                            {% endif %}
+                        </p>
+                        <p class="card-text"> Рейтинг: 
+                            {% if book_review %}
+                                {% if book_review[0] %}
+                                    {{ book_review[0] }}
+                                {% else %}
+                                    0
+                                {% endif %}
+                            {% endif %}
+                        </p>
+                        <a href="/books/{{ book.id }}" class="btn btn-primary">Посмотреть</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="col-12 my-2 d-flex justify-content-center">
+                {{ pagination.links }}
             </div>
         </div>
     </div>

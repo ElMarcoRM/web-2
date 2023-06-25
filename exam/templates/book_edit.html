@@ -1,0 +1,47 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 my-4 text-center">
+                <h3>Редактирование книги</h3>
+            </div>
+            <div class="col-12 col-lg-4">
+                {% for field, errors in form.errors.items() %}
+                    <div class="alert alert-error">
+                        {{ form[field].label }}: {{ ', '.join(errors) }}
+                    </div>
+                {% endfor %}
+                <form enctype="multipart/form-data" method="POST">
+                    {{ form.hidden_tag() }}
+                    <div class="form-group">
+                        {{form.name(class_="form-control", placeholder_="Название", value=book.name)}}
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control" name="short_description" placeholder="Краткое описание" value="{{book.short_description}}" rows="5">{{book.short_description}}</textarea>
+                    </div>
+                    <div class="form-group">
+                        {% for genre in genres %}
+
+                        {% endfor %}
+                    </div>
+                    <div class="form-group">
+                        {{form.year(class_="form-control", placeholder_="Год", size=4, value=book.year)}}
+                    </div>
+                    <div class="form-group">
+                        {{form.publisher(class_="form-control", placeholder_="Издательство", value=book.publisher)}}
+                    </div>
+                    <div class="form-group">
+                        {{form.author(class_="form-control", placeholder_="Автор", value=book.author)}}
+                    </div>
+                    <div class="form-group">
+                        {{form.pages(class_="form-control", placeholder_="Объем (страниц)", value=book.pages)}}
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-success" value="Сохранить">
+                        <a href="/" class="btn btn-primary">Назад</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

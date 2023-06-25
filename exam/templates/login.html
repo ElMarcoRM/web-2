@@ -16,20 +16,16 @@
                     {% endif %}
                 {% endwith %}
                 <form method="POST">
-                    <!-- <div class="form-group">
-                        <input type="text" class="form-control" id="login" name="login" placeholder="Логин">
-                    </div>
-                    <div class="form-group">
-                        <input type="password" class="form-control" id="password" name="password" placeholder="Пароль">
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" class="btn btn-primary" value="Войти">
-                    </div> -->
                     {{ form.hidden_tag() }}
-                    {{form.login(size=32, class_="form-control")}}<br>
-                    </p>
-                    {{form.password(size=32, class_="form-control", type="password")}}<br>
-                    </p>
+
+                    {{form.login(size=32, class_="form-control", placeholder="Логин")}}<br>
+
+                    {{form.password(size=32, class_="form-control", type="password", placeholder="Пароль")}}<br>
+                    
+                    <div class="form-check mb-3">
+                        <input type="checkbox" class="form-check-input" name="remember_me" id="rememberMe">
+                        <label class="form-check-label" for="rememberMe">Запомнить меня</label>
+                    </div>
                     <div class="form-group">
                         <input type="submit" class="btn btn-primary" value="Войти">
                     </div>

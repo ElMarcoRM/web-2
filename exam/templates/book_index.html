@@ -1,0 +1,78 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-center mt-4">
+            <div class="col-12 my-4">
+                {% if current_user.is_authenticated %}
+                    {% if current_user.role.name == "администратор" %}
+                        <a href="/books/edit/{{ book.id }}" class="btn btn-primary">Редактировать</a>
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteBookModal">
+                            Удалить
+                        </button>
+                    {% elif current_user.role.name == "модератор" %}
+                        <a href="/books/edit/{{ book.id }}" class="btn btn-primary">Редактировать</a>
+                    {% endif %}
+                {% endif %}
+            </div>
+            <div class="col-12 col-lg-4">
+                <img class="card-img-top" src="{{ url_for('media', filename="covers/" + book.cover.file) }}" alt="Card image cap">
+            </div>
+            <div class="col-12 col-lg-8">
+                <div class="d-flex flex-column">
+                    <h3>{{ book.name }}</h3>
+
+                    <p><b>Автор:</b> {{ book.author }}</p>
+
+                    <p>
+                        <b>Жанры:</b>
+                        {% for book_genre in book_genres %}
+                            {{ book_genre.genre.name }};
+                        {% endfor %}
+                    </p>
+
+                    <p><b>Год:</b> {{ book.year }}</p>
+
+                    <p><b>Издательство:</b> {{ book.publisher }}</p>
+
+                    <p><b>Краткое описание:</b> {{ book.short_description }}</p>
+                </div>
+            </div>
+            <div class="col-12">
+                <h4 class="my-4">Рецензии к книге</h4>
+                {% if reviewed == False %}
+                    <a href="/reviews/new/{{ book.id }}" class="btn btn-primary mb-4">Оставить рецензию</a>
+                {% endif %}
+                {% for review in reviews %}
+                    <div>
+                        <div class="d-flex">
+                            <p>{{ review.user.first_name }} {{ review.user.last_name }}</p>
+                            <p class="ml-3">Оценка: <b>{{ review.rating }}</b></p>
+                            <b class="ml-3">{{ review.created_at.strftime('%d.%m.%Y %H:%m') }}</b>
+                        </div>
+                        <p>{{ review.text }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal fade" id="deleteBookModal" tabindex="-1" role="dialog" aria-labelledby="deleteBookModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="deleteBookModalLabel">Удаление книги {{ book.name }}</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              Вы действительно хотите удалить книгу?
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Нет</button>
+              <a href="/books/delete/{{ book.id }}" class="btn btn-danger">Да</a>
+            </div>
+          </div>
+        </div>
+    </div>
+{% endblock %}
