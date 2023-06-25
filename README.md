@@ -1,1 +1,2 @@
-# lab-1: webdev-lab1-rojas-marco.std-2164.ist.mospolytech.ru
+# hosting: doesnt work
+# data for login ( user / password): for admin( admin/admin) , for review ( review / review)
