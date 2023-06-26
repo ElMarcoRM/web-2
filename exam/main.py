@@ -20,9 +20,10 @@ login_manager = flask_login.LoginManager()
 
 app = Flask(__name__, static_url_path='/static/', 
             static_folder='static')
+application=app     
 app.secret_key = 'flask-insecure-f+7=#^z18vefavl0o-7p)0e&578t)@r-tr8h0m%9@1ct64kdmd'
 migrate = Migrate(app, models.db, render_as_batch=True)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db.sqlite3"
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+mysqlconnector://std_2164_exam:12345678@std-mysql.ist.mospolytech.ru/std_2164_exam"
 # app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://std_2164_exam:Stud801286!@std-mysql/std_2164_exam"
 models.db.init_app(app)
 
