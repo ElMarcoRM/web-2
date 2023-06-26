@@ -28,6 +28,10 @@ deactivate () {
     fi
 
     unset VIRTUAL_ENV
+<<<<<<< HEAD
+=======
+    unset VIRTUAL_ENV_PROMPT
+>>>>>>> 667eafd47ae52e78a1352495f04cf35ecbb55e71
     if [ ! "${1:-}" = "nondestructive" ] ; then
     # Self destruct!
         unset -f deactivate
@@ -56,6 +60,11 @@ if [ -z "${VIRTUAL_ENV_DISABLE_PROMPT:-}" ] ; then
     _OLD_VIRTUAL_PS1="${PS1:-}"
     PS1="(env) ${PS1:-}"
     export PS1
+<<<<<<< HEAD
+=======
+    VIRTUAL_ENV_PROMPT="(env) "
+    export VIRTUAL_ENV_PROMPT
+>>>>>>> 667eafd47ae52e78a1352495f04cf35ecbb55e71
 fi
 
 # This should detect bash and zsh, which have a hash command that must

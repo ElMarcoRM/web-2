@@ -20,6 +20,10 @@ function deactivate  -d "Exit virtual environment and return to normal shell env
     end
 
     set -e VIRTUAL_ENV
+<<<<<<< HEAD
+=======
+    set -e VIRTUAL_ENV_PROMPT
+>>>>>>> 667eafd47ae52e78a1352495f04cf35ecbb55e71
     if test "$argv[1]" != "nondestructive"
         # Self-destruct!
         functions -e deactivate
@@ -61,4 +65,8 @@ if test -z "$VIRTUAL_ENV_DISABLE_PROMPT"
     end
 
     set -gx _OLD_FISH_PROMPT_OVERRIDE "$VIRTUAL_ENV"
+<<<<<<< HEAD
+=======
+    set -gx VIRTUAL_ENV_PROMPT "(env) "
+>>>>>>> 667eafd47ae52e78a1352495f04cf35ecbb55e71
 end
